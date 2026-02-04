@@ -17,13 +17,15 @@ def main(prompt: str, model_name: str = "blt-1b"):
     distributed_args.configure_world()
     if not torch.distributed.is_initialized():
         setup_torch_distributed(distributed_args)
-    checkpoint_path = os.path.join("hf-weights", model_name)
+    checkpoint_path = "/kaggle/input/blt-hehehe/blt_1b"
     print(f"Loading BLT model: {model_name}")
     model, tokenizer, train_cfg = load_consolidated_model_and_tokenizer(
         checkpoint_path,
     )
+    print("Reached point 1")
     assert isinstance(model, ByteLatentTransformer)
     assert isinstance(tokenizer, BltTokenizer)
+    print("Reached point 2")
     patcher_args = train_cfg.data.patcher_args.model_copy(deep=True)
     patcher_args.realtime_patching = True
     print("Loading entropy model and patcher")
